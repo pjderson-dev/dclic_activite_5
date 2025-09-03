@@ -8,8 +8,10 @@ void main() async {
   runApp(MonApplication()); // [cite: 64]
 }
 
-// Widget racine StatelessWidget [cite: 64]
+
 class MonApplication extends StatelessWidget {
+  const MonApplication({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -43,6 +45,8 @@ class MonApplication extends StatelessWidget {
 
 // Widget StatefulWidget pour l'interface [cite: 85]
 class RedacteursInterface extends StatefulWidget {
+  const RedacteursInterface({super.key});
+
   @override
   _RedacteursInterfaceState createState() => _RedacteursInterfaceState();
 }
@@ -119,28 +123,28 @@ class _RedacteursInterfaceState extends State<RedacteursInterface> {
   }
 
   void _afficherDialogueModification(Redacteur redacteur) {
-    // Affiche une boîte de dialogue pour la modification [cite: 144]
-    final _editNomController = TextEditingController(text: redacteur.nom);
-    final _editPrenomController = TextEditingController(text: redacteur.prenom);
-    final _editEmailController = TextEditingController(text: redacteur.email);
+
+    final editNomController = TextEditingController(text: redacteur.nom);
+    final editPrenomController = TextEditingController(text: redacteur.prenom);
+    final editEmailController = TextEditingController(text: redacteur.email);
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Modifier Rédacteur'), // [cite: 154]
+        title: Text('Modifier Rédacteur'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
-              controller: _editNomController,
+              controller: editNomController,
               decoration: InputDecoration(labelText: 'Nouveau Nom'),
             ),
             TextField(
-              controller: _editPrenomController,
+              controller: editPrenomController,
               decoration: InputDecoration(labelText: 'Nouveau Prénom'),
             ),
             TextField(
-              controller: _editEmailController,
+              controller: editEmailController,
               decoration: InputDecoration(labelText: 'Nouvel Email'),
             ),
           ],
@@ -149,15 +153,15 @@ class _RedacteursInterfaceState extends State<RedacteursInterface> {
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text('Annuler'),
-          ), // [cite: 161]
+          ),
           TextButton(
             onPressed: () async {
               await _dbManager.updateRedacteur(
                 Redacteur(
                   id: redacteur.id,
-                  nom: _editNomController.text,
-                  prenom: _editPrenomController.text,
-                  email: _editEmailController.text,
+                  nom: editNomController.text,
+                  prenom: editPrenomController.text,
+                  email: editEmailController.text,
                 ),
               );
               Navigator.pop(context);
@@ -179,7 +183,7 @@ class _RedacteursInterfaceState extends State<RedacteursInterface> {
           TextField(
             controller: _nomController,
             decoration: InputDecoration(labelText: 'Nom'),
-          ), // [cite: 87, 91]
+          ),
           TextField(
             controller: _prenomController,
             decoration: InputDecoration(labelText: 'Prénom'),
@@ -187,19 +191,19 @@ class _RedacteursInterfaceState extends State<RedacteursInterface> {
           TextField(
             controller: _emailController,
             decoration: InputDecoration(labelText: 'Email'),
-          ), // [cite: 102]
+          ),
           SizedBox(height: 20),
           ElevatedButton.icon(
-            onPressed: _ajouterRedacteur, // [cite: 139]
+            onPressed: _ajouterRedacteur,
             icon: Icon(Icons.add),
-            label: Text('Ajouter un Rédacteur'), // [cite: 103]
+            label: Text('Ajouter un Rédacteur'),
             style: ElevatedButton.styleFrom(
               minimumSize: Size(double.infinity, 50),
             ),
           ),
           SizedBox(height: 20),
           Expanded(
-            // Affiche la liste des rédacteurs [cite: 164]
+            // Affiche la liste des rédacteurs 
             child: ListView.builder(
               itemCount: _redacteursList.length,
               itemBuilder: (context, index) {
@@ -213,13 +217,13 @@ class _RedacteursInterfaceState extends State<RedacteursInterface> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          // Icône de modification [cite: 166]
+                          // Icône de modification
                           icon: Icon(Icons.edit, color: Colors.blue),
                           onPressed: () =>
                               _afficherDialogueModification(redacteur),
                         ),
                         IconButton(
-                          // Icône de suppression [cite: 166]
+                          // Icône de suppression
                           icon: Icon(Icons.delete, color: Colors.red),
                           onPressed: () => _supprimerRedacteur(redacteur.id!),
                         ),

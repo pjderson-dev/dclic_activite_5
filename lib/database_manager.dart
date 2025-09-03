@@ -5,7 +5,7 @@ import 'Modele/redacteur.dart';
 class DatabaseManager {
   late Database _database;
 
-  // Initialisation de la base de données [cite: 58]
+  // Initialisation de la base de données
   Future<void> initialisation() async {
     _database = await openDatabase(
       join(await getDatabasesPath(), 'redacteurs_database.db'),
@@ -18,7 +18,7 @@ class DatabaseManager {
     );
   }
 
-  // Récupérer tous les rédacteurs (Read) [cite: 59]
+  // Récupérer tous les rédacteurs (Read)
   Future<List<Redacteur>> getAllRedacteurs() async {
     final List<Map<String, dynamic>> maps = await _database.query('redacteurs');
     return List.generate(maps.length, (i) {
@@ -31,12 +31,12 @@ class DatabaseManager {
     });
   }
 
-  // Ajouter un rédacteur (Create) [cite: 60]
+  // Ajouter un rédacteur (Create)
   Future<void> insertRedacteur(Redacteur redacteur) async {
     await _database.insert('redacteurs', redacteur.toMap());
   }
 
-  // Mettre à jour un rédacteur (Update) [cite: 60]
+  // Mettre à jour un rédacteur (Update)
   Future<void> updateRedacteur(Redacteur redacteur) async {
     await _database.update(
       'redacteurs',
@@ -46,7 +46,7 @@ class DatabaseManager {
     );
   }
 
-  // Supprimer un rédacteur (Delete) [cite: 61]
+  // Supprimer un rédacteur (Delete)
   Future<void> deleteRedacteur(int id) async {
     await _database.delete(
       'redacteurs',
